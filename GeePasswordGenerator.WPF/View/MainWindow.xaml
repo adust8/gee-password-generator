@@ -1,0 +1,44 @@
+﻿<Window x:Class="GeePasswordGenerator.WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GeePasswordGenerator.WPF" 
+        xmlns:viewmodel="clr-namespace:GeePasswordGenerator.WPF.ViewModel" 
+        d:DataContext="{d:DesignInstance Type=viewmodel:MainWindowViewModel}"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="GeePassword"
+        Height="500"
+        Width="450">
+    <Grid>
+        <!-- #region Layout -->
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="30"/>
+            <RowDefinition
+                Height="20"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <!--#endregion-->
+        
+        <!-- #region Navigation buttons-->
+        <StackPanel
+            Margin="10 0 0 0"
+            Grid.Row="1"
+            Orientation="Horizontal">
+            <Button 
+                Style="{StaticResource ButtonStyle}"
+                Content="Generate password"
+                />
+        </StackPanel>
+        
+        <!-- #endregion -->
+        
+        <ContentControl
+            Grid.Row="2"
+            Content="{Binding CurrentViewModel, UpdateSourceTrigger=PropertyChanged}"
+            />
+
+    </Grid>
+</Window>
