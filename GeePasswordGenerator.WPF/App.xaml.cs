@@ -1,5 +1,8 @@
 ﻿using GeePasswordGenerator.WPF.Factories;
+using GeePasswordGenerator.WPF.Stores;
+using GeePasswordGenerator.WPF.View;
 using GeePasswordGenerator.WPF.ViewModel;
+using Generators;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -29,13 +32,17 @@ namespace GeePasswordGenerator.WPF
                 {
                     services.AddSingleton<MainWindow>();
                     services.AddSingleton<MainWindowViewModel>();
+                    services.AddSingleton<DefaultGeneratorView>();
+                    services.AddSingleton<DefaultGeneratorViewModel>();
+                    services.AddSingleton<INavigationStore, NavigationStore>();
+                    services.AddSingleton<IViewModelsFactory, ViewModelsFactory>();
+                    services.AddSingleton<Generator, DefaultGenerator>();
                 });
         }
 
         private readonly IHost? _host;
         protected override void OnStartup(StartupEventArgs e)
         {
-            IViewModelsFactory viewModelsFactory = new ViewModelsFactory();
             MainWindow mainWindow = _host.Services.GetRequiredService<MainWindow>();
             mainWindow.DataContext = _host.Services.GetRequiredService<MainWindowViewModel>();
             mainWindow.Show();

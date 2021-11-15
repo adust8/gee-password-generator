@@ -3,14 +3,21 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GeePasswordGenerator.WPF" 
+        xmlns:local="clr-namespace:GeePasswordGenerator.WPF"
         xmlns:viewmodel="clr-namespace:GeePasswordGenerator.WPF.ViewModel" 
+        xmlns:vw="clr-namespace:GeePasswordGenerator.WPF.View"
+        xmlns:factories="clr-namespace:GeePasswordGenerator.WPF.Factories"
         d:DataContext="{d:DesignInstance Type=viewmodel:MainWindowViewModel}"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="GeePassword"
         Height="500"
         Width="450">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewmodel:DefaultGeneratorViewModel}">
+            <vw:DefaultGeneratorView/>
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
         <!-- #region Layout -->
         <Grid.RowDefinitions>
@@ -27,9 +34,17 @@
             Margin="10 0 0 0"
             Grid.Row="1"
             Orientation="Horizontal">
-            <Button 
-                Style="{StaticResource ButtonStyle}"
-                Content="Generate password"
+            <Button
+                Style="{DynamicResource ButtonStyle}"
+                Content="Default generator"
+                Command="{Binding NavigateCommand}"
+                CommandParameter="{x:Static factories:ViewModelType.Default}"
+                />
+            <Button
+                Margin="10 0 0 0"
+                Content="Key phrase generator"
+                Command="{Binding NavigateCommand}"
+                CommandParameter="{x:Static factories:ViewModelType.KeyPhrase}"
                 />
         </StackPanel>
         

@@ -2,8 +2,12 @@
 using System.Text.RegularExpressions;
 
 Generator generator = new Generator();
-Console.WriteLine(generator.Generate(10).Shuffle());
-Console.WriteLine(generator.Generate(10).Shuffle());
+List<string> passwords = new ();
+for (int i = 0; i < 30; i++)
+{
+    passwords.Add(generator.Generate(30).Shuffle());
+}
+Console.WriteLine (string.Join("\n", passwords));
 
 [Flags]
 public enum PasswordChars
@@ -17,6 +21,7 @@ class Generator
     public readonly string Alphabet = "abcdefghijklmnopqrstuvwxyz";
     public readonly string Numbers = "1234567890";
     public readonly string Symbols = "~@#$%^&*()_+-=?";
+    private readonly Random _rnd;
     public string Generate(int length)
     {
         string generatedPassword = string.Empty;
@@ -45,17 +50,20 @@ class Generator
         {
             for(int i = 0; i < minimumCountOfChars; i++)
             {
-                Random rnd = new ();
-                generatedPassword += item[rnd.Next(item.Length)];
+                generatedPassword += item[_rnd.Next(item.Length)];
             }
         }
         string passwordSet = string.Join("", passwordCharsListing);
         for (int i = 0; i < remainder; i++)
         {
-            Random rnd = new();
-            generatedPassword += passwordSet[rnd.Next(passwordSet.Length)];
+            generatedPassword += passwordSet[_rnd.Next(passwordSet.Length)];
         }
         return generatedPassword;
+    }
+
+    public Generator()
+    {
+        _rnd = new Random();
     }
 }
 
